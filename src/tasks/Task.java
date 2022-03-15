@@ -1,15 +1,16 @@
 package tasks;
 
 public class Task {
-    String name;
-    String description;
-    int id;
-    String status;
+    protected String name;
+    protected String description;
+    protected int id;
+    protected TaskStatus status;
 
-    public Task(String name, String desc, String status) {
+    public Task(String name, String desc) {
         this.name = name;
         description = desc;
         this.status = status;
+        status = TaskStatus.NEW;
     }
 
     public String getName() {
@@ -36,11 +37,11 @@ public class Task {
         this.id = id;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
