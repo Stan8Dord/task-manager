@@ -1,16 +1,51 @@
 package tasks;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Task {
     protected String name;
     protected String description;
     protected int id;
     protected TaskStatus status;
+    protected long duration;
+    protected ZonedDateTime startTime;
 
-    public Task(String name, String desc) {
+    public Task(String name, String desc, long duration) {
         this.name = name;
-        description = desc;
-        this.status = status;
+        this.description = desc;
+        this.duration = duration;
         status = TaskStatus.NEW;
+
+        Instant moment = Instant.now();
+        ZoneId zone = ZoneId.of("Europe/Moscow");
+        startTime = ZonedDateTime.ofInstant(moment, zone);
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long newDuration) {
+        this.duration = newDuration;
+    }
+
+    public ZonedDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(ZonedDateTime newStartTime) {
+        this.startTime = newStartTime;
+    }
+
+    public ZonedDateTime getEndTime() {
+        if (startTime == null)
+            return null;
+        else
+            return startTime.plus(Duration.ofMinutes(duration));
     }
 
     public String getName() {
@@ -47,14 +82,24 @@ public class Task {
 
     @Override
     public String toString() {
-        String result = "Task{id=" + id + ", ";
-        result += "name='" + name + "', ";
+        StringBuilder sb = new StringBuilder("Task{id=" + id + ", name='" + name + "', ");
         if (description != null)
-            result = result + "description.length='" + description.length() + "', ";
+            sb.append("description.length='" + description.length() + "', ");
         else
-            result = result + "description=null, ";
-        result += "status='" + status + "]}";
+            sb.append("description=null, ");
+        sb.append("status='" + status + "', duration=" + duration + ", startTime=" +
+                startTime.format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")) + "}");
 
-        return result;
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Task otherTask = (Task) obj;
+        return this.id == otherTask.getId() &&
+                Duration.between(this.startTime, otherTask.getStartTime()).toMinutes() == 0;
     }
 }
+

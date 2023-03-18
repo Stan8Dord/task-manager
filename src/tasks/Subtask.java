@@ -1,25 +1,27 @@
 package tasks;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Subtask extends Task {
     private int parentId;
 
-    public Subtask(String name, String desc, int epicId) {
-        super(name, desc);
+    public Subtask(String name, String desc, int epicId, long duration) {
+        super(name, desc, duration);
         parentId = epicId;
     }
 
     @Override
     public String toString() {
-        String result = "Subtask{id=" + id + ", ";
-        result += "name='" + name + "', ";
+        StringBuilder sb = new StringBuilder("Subtask{id=" + id + ", name='" + name + "', ");
         if (description != null)
-            result = result + "description.length='" + description.length() + "', ";
+            sb.append("description.length='" + description.length() + "', ");
         else
-            result = result + "description=null, ";
-        result += "status='" + status + "', ";
-        result += "parentId=" + parentId + "]}";
+            sb.append("description=null, ");
+        sb.append("status='" + status + "', parentId=" + parentId + ", duration=" + duration +
+                ", startTime=" + startTime.format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm")) + "}");
 
-        return result;
+        return sb.toString();
     }
 
     public int getParentId() {

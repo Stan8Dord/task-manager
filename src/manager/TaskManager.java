@@ -1,10 +1,12 @@
 package manager;
 
+import history.HistoryManager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
-import java.util.ArrayList;
+import java.time.ZonedDateTime;
+import java.util.List;
 
 public interface TaskManager {
     Task createTask(Task task);
@@ -15,13 +17,15 @@ public interface TaskManager {
 
     void recalculateEpicStatus(Epic epic);
 
-    ArrayList<Task> getTasks();
+    List<Task> getTasks();
 
-    ArrayList<Subtask> getAllSubtasks();
+    List<Subtask> getAllSubtasks();
 
-    ArrayList<Subtask> getEpicSubtasks(Epic epic);
+    List<Subtask> getEpicSubtasks(Epic epic);
 
-    ArrayList<Epic> getEpics();
+    List<Subtask> getEpicSubtasks(int id);
+
+    List<Epic> getEpics();
 
     void removeAllTasks();
 
@@ -48,4 +52,14 @@ public interface TaskManager {
     void removeSubtaskById(int id);
 
     void removeEpicById(int id);
+
+    void recalculateEpicTime(Epic epic);
+
+    List<Task> getPrioritizedTasks();
+
+    void validateNewTaskTime(Task newTask);
+
+    void setStartTime(Task task, ZonedDateTime time);
+
+    HistoryManager getHistoryManager();
 }

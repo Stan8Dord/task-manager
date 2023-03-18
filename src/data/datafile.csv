@@ -1,0 +1,6 @@
+id,type,name,status,description,epic,duration,startTime
+10,TASK,Задача1,NEW,Сделать ДЗ,,10,24.05.22 22:44 Europe/Moscow+03:00
+11,EPIC,Большая задача 1,NEW,Закончить курс,,10,24.05.22 22:54 Europe/Moscow+03:00
+12,SUBTASK,Тема,NEW,Определиться с темой,11,10,24.05.22 22:54 Europe/Moscow+03:00
+
+11,10,12
